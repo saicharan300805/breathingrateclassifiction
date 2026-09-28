@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Environment and secrets
+.env
+*.log
+
+# Django
+db.sqlite3
+
+# Generated files and large datasets
+media/
+dataset/
+trained_model/

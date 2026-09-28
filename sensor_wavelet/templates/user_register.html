@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>User Registration</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        min-height: 100vh;
+        background: radial-gradient(circle at top left, #1e3c72, #2a5298, #1e3c72);
+        color: #e0f7fa;
+        padding: 60px 20px 40px;
+        text-align: center;
+        animation: fadeIn 1s ease forwards;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    h2 {
+        font-size: 3rem;
+        margin-bottom: 40px;
+        text-shadow: 0 4px 15px rgba(0, 150, 255, 0.7);
+        animation: bounce 2.5s infinite ease-in-out;
+    }
+
+    @keyframes bounce {
+        0%, 100% {
+            transform: translateY(0);
+            color: #81d4fa;
+            text-shadow: 0 4px 15px rgba(0, 150, 255, 0.7);
+        }
+        50% {
+            transform: translateY(-20px);
+            color: #4fc3f7;
+            text-shadow: 0 6px 20px rgba(0, 200, 255, 1);
+        }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px);}
+        to { opacity: 1; transform: translateY(0);}
+    }
+
+    form {
+        background: rgba(0, 0, 0, 0.55);
+        padding: 45px 40px;
+        border-radius: 20px;
+        box-shadow: 0 0 32px rgba(0, 105, 255, 0.7);
+        max-width: 450px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="date"],
+    select {
+        padding: 14px 18px;
+        border-radius: 12px;
+        border: none;
+        outline: none;
+        font-size: 1.1rem;
+        box-shadow: inset 0 0 12px rgba(0, 150, 255, 0.4);
+        background: rgba(255, 255, 255, 0.1);
+        color: #e0f7fa;
+        transition: box-shadow 0.3s ease;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        text-align-last: center;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    input[type="date"]:focus,
+    select:focus {
+        box-shadow: inset 0 0 16px rgba(0, 200, 255, 0.8);
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    select {
+        cursor: pointer;
+    }
+
+    input[type="submit"] {
+        background: linear-gradient(270deg, #ff6a00, #ee0979, #ff6a00);
+        background-size: 600% 600%;
+        padding: 16px 0;
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #fff;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 8px 22px rgba(255, 105, 135, 0.7);
+        animation: gradientShift 8s ease infinite;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        filter: drop-shadow(0 0 6px #ff6a00);
+        user-select: none;
+    }
+
+    input[type="submit"]:hover {
+        box-shadow: 0 12px 38px rgba(255, 105, 135, 1);
+        transform: scale(1.1);
+        animation-play-state: paused;
+        filter: drop-shadow(0 0 14px #ee0979);
+    }
+
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .error {
+        color: #ff6b6b;
+        font-weight: 700;
+        font-size: 1rem;
+        margin-bottom: -10px;
+        text-align: center;
+        user-select: none;
+    }
+
+    p.info {
+        margin-top: 20px;
+        font-size: 1rem;
+        color: #81d4fa;
+        user-select: none;
+    }
+
+    p.info a {
+        color: #4fc3f7;
+        font-weight: 600;
+        text-decoration: none;
+        transition: text-decoration 0.3s ease;
+    }
+
+    p.info a:hover {
+        text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+        form {
+            padding: 35px 25px;
+        }
+        h2 {
+            font-size: 2.4rem;
+            margin-bottom: 30px;
+        }
+        input[type="submit"] {
+            font-size: 1.1rem;
+            padding: 14px 0;
+        }
+    }
+</style>
+</head>
+<body>
+    <h2>📝 User Registration</h2>
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Full Name" required autofocus />
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="text" name="phone" placeholder="Phone Number" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <input type="password" name="confirm_password" placeholder="Confirm Password" required />
+        <input type="date" name="dob" required />
+        <select name="state" required>
+            <option value="" disabled selected>-- Select State --</option>
+            <option value="Andhra Pradesh">Andhra Pradesh</option>
+            <option value="Telangana">Telangana</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="Tamil Nadu">Tamil Nadu</option>
+            <option value="Other">Other</option>
+        </select>
+        <input type="submit" value="Register" />
+    </form>
+    <p class="info">Already registered? <a href="{% url 'user_login' %}">Login here</a></p>
+</body>
+</html>

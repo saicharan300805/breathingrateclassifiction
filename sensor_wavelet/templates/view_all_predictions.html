@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>All Predictions</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        min-height: 100vh;
+        background: radial-gradient(circle at top left, #1e3c72, #2a5298, #1e3c72);
+        color: #e0f7fa;
+        padding: 60px 20px 40px;
+        animation: fadeIn 1s ease forwards;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 3rem;
+        margin-bottom: 40px;
+        text-shadow: 0 4px 15px rgba(0, 150, 255, 0.7);
+        animation: bounce 2.5s infinite ease-in-out;
+    }
+
+    @keyframes bounce {
+        0%, 100% {
+            transform: translateY(0);
+            color: #81d4fa;
+            text-shadow: 0 4px 15px rgba(0, 150, 255, 0.7);
+        }
+        50% {
+            transform: translateY(-20px);
+            color: #4fc3f7;
+            text-shadow: 0 6px 20px rgba(0, 200, 255, 1);
+        }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px);}
+        to { opacity: 1; transform: translateY(0);}
+    }
+
+    table {
+        width: 90%;
+        max-width: 1000px;
+        border-collapse: separate;
+        border-spacing: 0 12px;
+        box-shadow: 0 8px 22px rgba(0,0,0,0.4);
+        border-radius: 15px;
+        overflow: hidden;
+        background: rgba(0, 0, 0, 0.45);
+        color: #e0f7fa;
+        font-weight: 600;
+        table-layout: fixed;
+    }
+
+    thead tr {
+        background: linear-gradient(90deg, #56ccf2, #2f80ed);
+        color: white;
+        font-size: 1.1rem;
+    }
+
+    thead th {
+        padding: 14px 18px;
+        text-align: center;
+        word-wrap: break-word;
+    }
+
+    tbody tr {
+        background: rgba(255, 255, 255, 0.05);
+        transition: background 0.3s ease, transform 0.15s ease;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        text-align: center;
+    }
+
+    tbody tr:nth-child(odd) {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    tbody tr:hover {
+        background: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 8px 24px rgba(0, 162, 255, 0.7);
+        transform: scale(1.02);
+    }
+
+    tbody td {
+        padding: 14px 18px;
+        color: #dbeeff;
+        vertical-align: middle;
+        overflow-wrap: break-word;
+    }
+
+    tbody img {
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        max-width: 100px;
+        max-height: 60px;
+        object-fit: cover;
+    }
+
+    tbody span.na {
+        color: #999999;
+        font-style: italic;
+        user-select: none;
+    }
+
+    .back-container {
+        margin-top: 40px;
+        user-select: none;
+    }
+
+    a.back-link {
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: #81d4fa;
+        text-decoration: none;
+        padding: 10px 25px;
+        border-radius: 40px;
+        background: rgba(0, 0, 0, 0.3);
+        box-shadow: 0 0 20px rgba(0, 150, 255, 0.5);
+        transition: color 0.3s ease, box-shadow 0.3s ease;
+        display: inline-block;
+        user-select: none;
+    }
+
+    a.back-link:hover {
+        color: #4fc3f7;
+        box-shadow: 0 0 32px #4fc3f7;
+    }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+        table {
+            font-size: 0.9rem;
+            max-width: 95vw;
+        }
+        h2 {
+            font-size: 2.4rem;
+            margin-bottom: 30px;
+        }
+    }
+</style>
+</head>
+<body>
+    <h2>📊 All Predictions</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>BPM</th>
+                <th>Time</th>
+                <th>CWT Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in data %}
+            <tr>
+                <td>{{ p.name }}</td>
+                <td>{{ p.email }}</td>
+                <td>{{ p.bpm }}</td>
+                <td>{{ p.time }}</td>
+                <td>
+                    {% if p.cwt %}
+                        <img src="{{ MEDIA_URL }}{{ p.cwt }}" alt="CWT Image of {{ p.name }}" />
+                    {% else %}
+                        <span class="na">N/A</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="back-container">
+        <a href="{% url 'admin_dashboard' %}" class="back-link">⬅️ Back to Dashboard</a>
+    </div>
+</body>
+</html>
